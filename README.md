@@ -37,6 +37,8 @@ src/
 │   │   │   │   ├── WarehouseService.java
 │   │   ├── Main.java
 
+---
+
 ## How to Run
 
 ### Step 1: Compile the Project

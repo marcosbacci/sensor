@@ -33,7 +33,7 @@ public class WarehouseService {
 
             System.out.println("WarehouseService is running and listening for sensor data...");
 
-            // Loop para escutar eventos no Selector
+            // Loop to listen to events in the Selector
             while (true) {
                 selector.select(); // Waiting for reading events
 
