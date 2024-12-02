@@ -28,20 +28,6 @@ public class WarehouseServiceTest {
             socket.send(packet);
         }
 
-        // Test that the message was processed correctly (log output check is manual
-        // here)
-        Thread.sleep(1000); // Allow processing time
-        assertTrue(SensorFactory.getRegisteredPorts().contains(3344));
-    }
-
-    @Test
-    public void testWarehouseServiceHandlesHumiditySensorData() throws Exception {
-        CentralService centralService = new CentralService();
-        WarehouseService warehouseService = new WarehouseService(centralService);
-
-        // Start WarehouseService in a separate thread
-        new Thread(warehouseService::start).start();
-
         // Send a UDP packet to the port
         try (DatagramSocket socket = new DatagramSocket()) {
             String message = "sensor_id=h1,value=60.0";
@@ -53,6 +39,7 @@ public class WarehouseServiceTest {
         // Test that the message was processed correctly (log output check is manual
         // here)
         Thread.sleep(1000); // Allow processing time
+        assertTrue(SensorFactory.getRegisteredPorts().contains(3344));
         assertTrue(SensorFactory.getRegisteredPorts().contains(3355));
     }
 }

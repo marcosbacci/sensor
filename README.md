@@ -1,12 +1,11 @@
 # Sensor Threshold Monitoring System
 
-This project is a **Sensor Threshold Monitoring System** designed to monitor various sensors via UDP communication. Each sensor type is identified by its logical port, and dynamic port assignment is used to avoid conflicts. The system processes sensor data and logs alerts when thresholds are exceeded.
+This project is a **Sensor Threshold Monitoring System** designed to monitor various sensors via UDP communication. The system processes sensor data and logs alerts when thresholds are exceeded.
 
 ---
 
 ## Features
 
-- **Dynamic Port Assignment**: Automatically assigns available ports to logical sensor ports.
 - **Extensible Sensor Management**: New sensor types can be added without modifying core logic.
 - **Real-Time Monitoring**: Listens for UDP packets and processes sensor data in real-time.
 - **Alerting System**: Logs alerts when sensor values exceed their thresholds.
@@ -56,12 +55,12 @@ Use **Netcat** or a similar UDP client to send sensor data.
 #### Example Commands:
 For a **Temperature Sensor**:
 ```bash
-echo "sensor_id=t1,value=40.0" | nc -u -p 3344 127.0.0.1 <dynamic-port-for-3344>
+echo "sensor_id=t1,value=40.0" | nc -u 127.0.0.1 3344
 ```
 
 For a **Humidity Sensor**:
 ```bash
-echo "sensor_id=h1,value=60.0" | nc -u -p 3355 127.0.0.1 <dynamic-port-for-3355>
+echo "sensor_id=h1,value=60.0" | nc -u 127.0.0.1 3355
 ```
 
 ---
@@ -77,15 +76,11 @@ mvn test
 
 ## How It Works
 
-1. **Dynamic Port Assignment**:
-   - Each logical sensor port (e.g., `3344` for temperature) is mapped to a dynamically assigned port by the system.
-   - This eliminates conflicts and allows multiple tests to run simultaneously.
-
-2. **Sensor Data Processing**:
-   - Data packets are received on the dynamic ports and mapped back to their logical ports.
+1. **Sensor Data Processing**:
+   - Data packets are received on the mapped ports.
    - Sensors are created dynamically using the `SensorFactory`.
 
-3. **Threshold Checking**:
+2. **Threshold Checking**:
    - The `CentralService` checks if the sensor value exceeds its threshold.
    - Logs are generated for alerts or normal operations.
 
@@ -117,8 +112,8 @@ ALERT: t1 exceeded threshold with value: 40.0 C
 
 ### Dynamic Port Mapping:
 ```
-Listening for logical port 3344 on dynamic port 45012
-Listening for logical port 3355 on dynamic port 45013
+Listening on port: 3344
+Listening on port: 3355
 ```
 
 ---
@@ -134,7 +129,5 @@ Listening for logical port 3355 on dynamic port 45013
   ```bash
   kill -9 <PID>
   ```
-
-- **Dynamic Port Identification**: Check the logs to find the dynamic port associated with each logical port.
 
 ---
