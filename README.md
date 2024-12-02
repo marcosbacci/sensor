@@ -37,7 +37,7 @@ src/
 │   │   │   │   ├── WarehouseService.java
 │   │   ├── Main.java
 
----
+```
 
 ## How to Run
 
